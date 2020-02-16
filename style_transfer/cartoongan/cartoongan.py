@@ -1,7 +1,8 @@
 import os
 import numpy as np
 import tensorflow as tf
-from keras_contrib.layers import InstanceNormalization
+import tensorflow_addons as tfa
+# from keras_contrib.layers import InstanceNormalization
 from tensorflow.keras.layers import Layer, InputSpec
 
 PRETRAINED_WEIGHT_DIR = os.path.join(
@@ -48,7 +49,7 @@ def instance_norm_layer(style, name, epsilon=1e-9):
     init_beta = np.load(f"{PRETRAINED_WEIGHT_DIR}/{style}/{name}.shift.npy")
     init_gamma = np.load(f"{PRETRAINED_WEIGHT_DIR}/{style}/{name}.scale.npy")
 
-    layer = InstanceNormalization(
+    layer = tfa.layers.normalizations.InstanceNormalization(
         axis=-1,
         epsilon=epsilon,
         beta_initializer=tf.keras.initializers.constant(init_beta),
