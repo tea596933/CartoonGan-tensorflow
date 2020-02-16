@@ -77,7 +77,8 @@ def deconv_layers(style, name, filters, kernel_size, strides=(1, 1)):
 
 
 def load_model(style):
-    inputs = tf.keras.Input(shape=(None, None, 3))
+    # inputs = tf.keras.Input(shape=(None, None, 3))
+    inputs = tf.keras.Input(shape=(256, 256, 3))
 
     # y = tf.keras.layers.ZeroPadding2D(padding=(3, 3))(inputs)
     y = ReflectionPadding2D(padding=(3, 3))(inputs)
@@ -151,7 +152,8 @@ def load_model(style):
 if __name__ == '__main__':
     g = load_model(style="shinkai")
     np.random.seed(9527)
-    nx = np.random.rand(1, 225, 225, 3).astype(np.float32)
+    # nx = np.random.rand(1, 225, 225, 3).astype(np.float32)
+    nx = np.random.rand(1, 256, 256, 3).astype(np.float32)
     out = g(nx)
     tf_out = np.load("tf_out.npy")
 
